@@ -103,7 +103,8 @@ export default function LandingPage() {
                 alt="Landing Page Illustration"
                 width={600}
                 height={400}
-                className="rounded-lg shadow-lg"
+                className="object-contain bg-transparent"
+
               />
             </div>
           </motion.div>
