@@ -10,6 +10,17 @@ import { Courier_Prime, Open_Sans } from 'next/font/google';
 const courierPrime = Courier_Prime({ subsets: ['latin'], weight: '400' });
 const openSans = Open_Sans({ subsets: ['latin'], weight: ['400', '600'] });
 
+interface Conflict {
+  id: number;
+  title: string;
+  status: string;
+  votes: number;
+  comments: number;
+  communityName: string;
+  timeLeft: string;
+}
+
+
 // Mock Data for Communities and Conflicts/Issues
 const mockCommunities = [
   {
@@ -28,12 +39,14 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [communities, setCommunities] = useState(mockCommunities);
-  const [conflicts, setConflicts] = useState([]);
+  const [conflicts, setConflicts] = useState<Conflict[]>([]);
+
 
   useEffect(() => {
-    const allConflicts = communities.flatMap((c) => c.conflicts);
+    const allConflicts: Conflict[] = communities.flatMap((c) => c.conflicts);
     setConflicts(allConflicts);
   }, [communities]);
+  
 
   const filteredConflicts = conflicts.filter(
     (conflict) =>

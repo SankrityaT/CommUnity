@@ -33,22 +33,23 @@ const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedRanks, setSelectedRanks] = useState(Array(votingOptions.length).fill(null));
 
     // Define handleRankSelection function
-  const handleRankSelection = (optionIndex) => {
-    if (voted) return; // Disable ranking after vote submission
-
-    const currentRank = selectedRanks.filter((rank) => rank !== null).length + 1;
-    const newRanks = [...selectedRanks];
-
-    if (newRanks[optionIndex] !== null) {
-      // If the option is already ranked, reset the rank
-      newRanks[optionIndex] = null;
-    } else if (currentRank <= votingOptions.length) {
-      // Assign the next available rank
-      newRanks[optionIndex] = currentRank;
-    }
-
-    setSelectedRanks(newRanks);
-  };
+    const handleRankSelection = (optionIndex: number) => {
+      if (voted) return; // Disable ranking after vote submission
+    
+      const currentRank = selectedRanks.filter((rank) => rank !== null).length + 1;
+      const newRanks = [...selectedRanks];
+    
+      if (newRanks[optionIndex] !== null) {
+        // If the option is already ranked, reset the rank
+        newRanks[optionIndex] = null;
+      } else if (currentRank <= votingOptions.length) {
+        // Assign the next available rank
+        newRanks[optionIndex] = currentRank;
+      }
+    
+      setSelectedRanks(newRanks);
+    };
+    
 
   const handleCommentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,14 +57,15 @@ const [selectedOption, setSelectedOption] = useState<number | null>(null);
     setComment("");
 };
 
-const calculateVotePercentages = (ranks, totalVotes) => {
-    const weights = ranks.map(rank => (rank !== null ? votingOptions.length - rank + 1 : 0));
-    const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
-  
-    if (totalWeight === 0) return voteCounts; // If no ranks are assigned, keep original percentages
-  
-    return weights.map(weight => (weight / totalWeight) * 100);
-  };
+const calculateVotePercentages = (ranks: (number | null)[], totalVotes: number): number[] => {
+  const weights = ranks.map((rank: number | null) => (rank !== null ? votingOptions.length - rank + 1 : 0));
+  const totalWeight = weights.reduce((acc: number, weight: number) => acc + weight, 0);
+
+  if (totalWeight === 0) return voteCounts; // If no ranks are assigned, keep original percentages
+
+  return weights.map((weight: number) => (weight / totalWeight) * 100);
+};
+
   
 const handleVoteSubmit = () => {
     if (voted) return; // Prevent multiple submissions

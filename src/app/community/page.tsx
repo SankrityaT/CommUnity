@@ -75,6 +75,8 @@ export default function CommunityView({ params }: { params: { id: string } }) {
   const [showDiscussion, setShowDiscussion] = useState<number | null>(null);
   const { id } = params;
   const communityId = parseInt(id, 10);
+  const [searchUser, setSearchUser] = useState("");
+
 
   // Clear localStorage and set only Sky Song Company data on mount
   useEffect(() => {

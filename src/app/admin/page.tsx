@@ -1,5 +1,7 @@
 import { CheckCircle, XCircle, MessageCircle, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
+import React from 'react';
+
 
 export default function AdminPage() {
   // Mock data for submitted issues and flagged comments
