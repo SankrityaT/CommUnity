@@ -99,7 +99,7 @@ export default function LandingPage() {
             {/* Add the landing.png image here */}
             <div className="mt-8">
               <Image
-                src="/landing.png" // Ensure the image is in the public directory
+                src="/people.png" // Ensure the image is in the public directory
                 alt="Landing Page Illustration"
                 width={600}
                 height={400}
