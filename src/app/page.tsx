@@ -34,7 +34,7 @@ export default function LandingPage() {
                 alt="CommUnity Logo"
                 width={60}
                 height={60}
-                className="rounded-full"
+                className="object-contain bg-transparent"
               />
             </div>
             <span className={`font-bold text-yellow-800 text-2xl ml-2 ${courierPrime.className}`}>CommUnity</span>
@@ -235,9 +235,9 @@ export default function LandingPage() {
               <Image
                 src="/logo.png"
                 alt="CommUnity Logo"
-                width={200}
-                height={200}
-                className="rounded-lg shadow-lg"
+                width={400}
+                height={400}
+                className="object-contain bg-transparent"
               />
             </div>
             
