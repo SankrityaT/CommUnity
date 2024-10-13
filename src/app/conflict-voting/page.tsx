@@ -218,7 +218,7 @@ const handleVoteOption = (optionIndex: number) => {
 
         {isAssistantVisible && (
           <div className="bg-white shadow sm:rounded-lg mt-8 p-6 fixed bottom-24 right-10 w-80">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">AI Assistant: Historical Data</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">MedAIate</h3>
             <p className="text-gray-600 mb-4">
               Our AI assistant has analyzed previous similar conflicts regarding recreation room facilities. Here are some insights:
             </p>

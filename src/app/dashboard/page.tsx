@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Bell, ChevronDown, MessageCircle, ThumbsUp, BarChart2, Search } from "lucide-react";
+import { MessageCircle, ThumbsUp, BarChart2, Search,Lock } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { Courier_Prime, Open_Sans } from 'next/font/google';
+import { useRouter } from 'next/navigation';  // Fix this import
+
 
 // Import fonts
 const courierPrime = Courier_Prime({ subsets: ['latin'], weight: '400' });
@@ -36,22 +38,48 @@ const mockCommunities = [
 ];
 
 export default function Dashboard() {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [communities, setCommunities] = useState(mockCommunities);
   const [conflicts, setConflicts] = useState<Conflict[]>([]);
 
+  const [showAdminPrompt, setShowAdminPrompt] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
+
+  const router = useRouter();
+
+  const handleAdminClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    setShowAdminPrompt(true);
+  };
+  
+  const handleAdminSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (adminPassword === 'Team11') {
+      setShowAdminPrompt(false);
+      setAdminPassword('');
+      router.push('/admin');
+    } else {
+      alert('Incorrect password. Please try again.');
+    }
+  };
+  
 
   useEffect(() => {
     const allConflicts: Conflict[] = communities.flatMap((c) => c.conflicts);
     setConflicts(allConflicts);
   }, [communities]);
+
+
   
 
   const filteredConflicts = conflicts.filter(
     (conflict) =>
       conflict.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (filterCategory === "All" || conflict.communityName.includes(filterCategory))
+
+      
   );
 
   return (
@@ -67,11 +95,49 @@ export default function Dashboard() {
     <Link href="/dashboard" className="block py-2 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600">Dashboard</Link>
     <Link href="/profile" className="block py-2 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600">My Profile</Link>
     <Link href="/create-community" className="block py-2 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600">Create Community</Link>
-    
-    {/* Add this new link */}
     <Link href="/issue-submission" className="block py-2 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600">Submit a Conflict</Link>
+
+          {/* Admin Dashboard Link with Lock Icon */}
+          <a href="#" onClick={handleAdminClick} className="block py-2 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600">
+            Admin Dashboard
+            <Lock className="inline-block ml-2 w-4 h-4" />
+          </a>
   </nav>
 </aside>
+
+{/* Admin Password Prompt */}
+{showAdminPrompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold mb-4">Enter Admin Password</h2>
+            <form onSubmit={handleAdminSubmit}>
+              <input
+                type="password"
+                value={adminPassword}
+                onChange={(e) => setAdminPassword(e.target.value)}
+                className="border rounded px-2 py-1 mb-4 w-full"
+                placeholder="Password"
+              />
+              <div className="flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAdminPrompt(false)}
+                  className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
 
 
       {/* Main Content */}
@@ -112,7 +178,7 @@ export default function Dashboard() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-2 top-3 text-gray-500" />
+
             </div>
           </div>
 

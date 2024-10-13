@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { PlusCircle, MessageCircle, ThumbsUp, BarChart2, User, Trash } from "lucide-react";
+import { MessageCircle, ThumbsUp, BarChart2, User, Trash } from "lucide-react";
 
 // Mock Data for Sky Song Company
 const defaultCommunities = [
@@ -72,6 +72,7 @@ const defaultCommunities = [
   },
 ];
 
+
 export default function CommunityView({ params }: { params: { id: string } }) {
   const [communities, setCommunities] = useState(defaultCommunities);
   const [showInvitePopup, setShowInvitePopup] = useState(false);
@@ -84,6 +85,7 @@ export default function CommunityView({ params }: { params: { id: string } }) {
 
   // Load communities from localStorage if available
   useEffect(() => {
+    localStorage.clear(); // Clear local storage to reset the data
     const storedCommunities = JSON.parse(localStorage.getItem("communities") || "[]");
     if (storedCommunities.length > 0) {
       setCommunities(storedCommunities);
@@ -308,30 +310,6 @@ export default function CommunityView({ params }: { params: { id: string } }) {
           )}
         </section>
 
-        {/* Submit New Issue */}
-        <section className="mt-6">
-          {!showNewIssueForm ? (
-            <button onClick={() => setShowNewIssueForm(true)} className="inline-flex items-center px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Submit New Issue
-            </button>
-          ) : (
-            <form onSubmit={handleSubmitIssue} className="bg-white p-4 rounded-md shadow-md">
-              <div className="mb-4">
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700">Issue Title</label>
-                <input
-                  type="text"
-                  id="title"
-                  value={newIssue.title}
-                  onChange={(e) => setNewIssue({ ...newIssue, title: e.target.value })}
-                  className="mt-1 block w-full p-2 border rounded-md"
-                  required
-                />
-              </div>
-              <button type="submit" className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md">Submit Issue</button>
-            </form>
-          )}
-        </section>
       </main>
     </div>
   );
