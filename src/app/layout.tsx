@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Importing local fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -13,11 +14,13 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+// Metadata for the page
 export const metadata: Metadata = {
-  title: "Hacks4H",
-  description: "Your Conflict Resolver Assistant",
+  title: "CommUnity",
+  description: "Your Conflict Resolver Platform",
 };
 
+// Root Layout component
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,10 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/logo.png" /> {/* Add favicon using logo.png */}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* Main content */}
+        <main>{children}</main>
       </body>
     </html>
   );
