@@ -15,12 +15,13 @@ export default function AuthPage() {
 
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically handle form submission
     console.log({ userType, name, email, password, adminCode });
     router.push('/dashboard');
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FBBF24] via-[#FCD34D] to-[#FAFAFA] flex items-center justify-center p-4">
